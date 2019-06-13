@@ -1,4 +1,6 @@
 #pragma once
+#include <vector>
+
 class Engine
 {
 public:
@@ -15,11 +17,8 @@ public:
 
 	bool bIsRunning;
 
-	class Player* player;
-	//class Goblin* goblin[100];
-	//class Wildboar* wildboar[100];
-	//class Slime* slime[100];
+	std::vector<class Character*> characters;
 
-	class Monster* monster[100];
+	int monsterCount = 10;
 };
 

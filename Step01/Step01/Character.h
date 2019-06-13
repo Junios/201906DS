@@ -9,6 +9,6 @@ public:
 	int HP;
 	int Speed;
 
-	void Move();
+	virtual void Move();
 };
 
