@@ -3,7 +3,7 @@ class Character
 {
 public:
 	Character();
-	~Character();
+	virtual ~Character();
 
 	int Attack;
 	int HP;
