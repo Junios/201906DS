@@ -57,7 +57,10 @@ void Engine::Term()
 	for (int i = 0; i < characters.size(); ++i)
 	{
 		delete characters[i];
+		characters[i] = nullptr;
 	}
+
+	characters.clear();
 }
 
 void Engine::Run()
