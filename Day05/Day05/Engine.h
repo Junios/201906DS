@@ -1,4 +1,7 @@
 #pragma once
+#include <vector>
+#include "Map.h"
+
 class Engine
 {
 public:
@@ -18,5 +21,11 @@ protected:
 	virtual void Render();
 
 	virtual bool GameLoop();
+
+	int CurrentKeyCode;
+
+	std::vector<class Character*> Characters;
+
+	class Map* MapData;
 };
 

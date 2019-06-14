@@ -1,6 +1,3 @@
 Debug
 Release
 .vs
-*.filters
-*.user
-*.vcxproj
