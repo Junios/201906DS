@@ -5,18 +5,18 @@ public:
 	Engine();
 	virtual ~Engine();
 
-	bool Init();
-	bool Term();
-	bool Run();
+	virtual bool Init();
+	virtual bool Term();
+	virtual bool Run();
 
 
-private:
+protected:
 	bool bIsRunning;
 
-	void Input();
-	void Tick();
-	void Render();
+	virtual void Input();
+	virtual void Tick();
+	virtual void Render();
 
-	bool GameLoop();
+	virtual bool GameLoop();
 };
 
