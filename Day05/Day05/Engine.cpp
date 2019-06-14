@@ -1,4 +1,6 @@
 #include "Engine.h"
+#include <stdio.h>
+#include <conio.h>
 
 
 
@@ -15,6 +17,7 @@ Engine::~Engine()
 
 bool Engine::Init()
 {
+	printf("Engine Init().\n");
 	bIsRunning = true;
 
 	return true;
@@ -22,6 +25,7 @@ bool Engine::Init()
 
 bool Engine::Term()
 {
+	printf("Engine Term().\n");
 	return false;
 }
 
@@ -32,10 +36,19 @@ bool Engine::Run()
 
 void Engine::Input()
 {
+	CurrentKeyCode = getch();
 }
 
 void Engine::Tick()
 {
+	switch (CurrentKeyCode)
+	{
+		case 'q':
+		case 'Q':
+			bIsRunning = false;
+	}
+
+	CurrentKeyCode = 0;
 }
 
 void Engine::Render()
