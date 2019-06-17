@@ -14,6 +14,9 @@ public:
 protected:
 	virtual void Input() override;
 	virtual void Tick() override;
+<<<<<<< HEAD
 	virtual void Render() override;
+=======
+>>>>>>> 0a7ee8af185bcf25429f98853235b5b80e75a83c
 };
 

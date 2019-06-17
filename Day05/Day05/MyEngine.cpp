@@ -3,7 +3,10 @@
 #include "Map.h"
 #include "Player.h"
 #include "Monster.h"
+<<<<<<< HEAD
 #include <stdlib.h>
+=======
+>>>>>>> 0a7ee8af185bcf25429f98853235b5b80e75a83c
 
 
 MyEngine::MyEngine()
@@ -62,6 +65,7 @@ void MyEngine::Tick()
 {
 	//code here
 	//Player, Monster bla bla;
+<<<<<<< HEAD
 	MapData->Tick();
 
 	Engine::Tick();
@@ -74,4 +78,8 @@ void MyEngine::Render()
 	system("cls");
 
 	MapData->Render();
+=======
+
+	Engine::Tick();
+>>>>>>> 0a7ee8af185bcf25429f98853235b5b80e75a83c
 }

@@ -1,5 +1,8 @@
 #include "Map.h"
+<<<<<<< HEAD
 #include "Util.h"
+=======
+>>>>>>> 0a7ee8af185bcf25429f98853235b5b80e75a83c
 
 
 
@@ -11,6 +14,7 @@ Map::Map()
 Map::~Map()
 {
 }
+<<<<<<< HEAD
 
 void Map::Tick()
 {
@@ -48,3 +52,5 @@ char Map::GetMapTile(int Type)
 
 	return ' ';
 }
+=======
+>>>>>>> 0a7ee8af185bcf25429f98853235b5b80e75a83c

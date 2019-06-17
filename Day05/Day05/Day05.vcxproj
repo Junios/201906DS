@@ -139,7 +139,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <ClCompile Include="Actor.cpp" />
+=======
+>>>>>>> 0a7ee8af185bcf25429f98853235b5b80e75a83c
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="main.cpp" />
@@ -147,18 +150,27 @@
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="MyEngine.cpp" />
     <ClCompile Include="Player.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="Util.cpp" />
     <ClCompile Include="Vector.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
+=======
+    <ClCompile Include="Vector.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+>>>>>>> 0a7ee8af185bcf25429f98853235b5b80e75a83c
     <ClInclude Include="Character.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="MyEngine.h" />
     <ClInclude Include="Player.h" />
+<<<<<<< HEAD
     <ClInclude Include="Util.h" />
+=======
+>>>>>>> 0a7ee8af185bcf25429f98853235b5b80e75a83c
     <ClInclude Include="Vector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
