@@ -7,11 +7,13 @@ public:
 
 	void PushBack(int NewValue);
 
+	int GetData(size_t GetPos);
+
 	int operator[](size_t GetPos);
 	int GetSize();
 private:
 	int* Data;
-	size_t Size;
+	size_t StorageSize;
 	size_t Pos;
 };
 
