@@ -4,6 +4,8 @@ class Monster : public Character
 {
 public:
 	Monster();
+	Monster(class Map* const newMap);
+
 	virtual ~Monster();
 
 	virtual void Tick() override;
@@ -11,5 +13,6 @@ public:
 
 protected:
 	virtual void Move() override;
+	class Map* mapData;
 };
 

@@ -8,7 +8,7 @@
 
 MyEngine::MyEngine()
 {
-//	Engine::Init();
+	//	Engine::Init();
 	Init();
 }
 
@@ -16,15 +16,15 @@ MyEngine::MyEngine()
 MyEngine::~MyEngine()
 {
 	Term();
-//	Engine::Term();
+	//	Engine::Term();
 }
 
 bool MyEngine::Init()
 {
 	printf("MyEngine Init().\n");
 	MapData = new Map();
-	Characters.push_back(new Player());
-	Characters.push_back(new Monster());
+	Characters.push_back(new Player(MapData));
+	Characters.push_back(new Monster(MapData));
 
 
 	return true;
@@ -63,6 +63,26 @@ void MyEngine::Tick()
 	//code here
 	//Player, Monster bla bla;
 	MapData->Tick();
+	for (int i = 0; i < Characters.size(); ++i)
+	{
+		Characters[i]->Tick(); //Player, Monster
+	}
+
+	if (Characters[0]->Position.X == Characters[1]->Position.X &&
+		Characters[0]->Position.Y == Characters[1]->Position.Y)
+	{
+		//Die
+		bIsRunning = false;
+		//결과 화면 추가
+	}
+	else if (Characters[0]->Position.X == 8 &&
+		Characters[0]->Position.Y == 8)
+	{
+		//Escape
+		bIsRunning = false;
+		//결과 화면 추가
+	}
+
 
 	Engine::Tick();
 }
@@ -74,6 +94,12 @@ void MyEngine::Render()
 	system("cls");
 
 	MapData->Render();
+	for (int i = 0; i < Characters.size(); ++i)
+	{
+		Characters[i]->Render(); //Player, Monster
+	}
+
+
 
 	Engine::Tick();
 }
