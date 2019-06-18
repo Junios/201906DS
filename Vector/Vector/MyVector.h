@@ -114,12 +114,15 @@ bool MyVector<T>::InsertAfter(size_t Index, T Value)
 		Data = Temp;
 	}
 
+	//자료 이동
 	memcpy(&Data[Index + 1], &Data[Index], (Size - Index) * sizeof(T));
 	//for (int i = Size-1; i >= Index+1; --i)
 	//{
 	//	Data[i + 1] = Data[i];
 	//}
-	//Data[Index+1] = Value;
+
+	//새 자료 추가
+	Data[Index+1] = Value;
 
 	Size++;
 	InsertPosition++;

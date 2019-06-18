@@ -30,7 +30,7 @@ int main()
 	}
 
 	v.InsertAfter(1, 10);
-	//v.InsertAfter(1, 20);
+	v.InsertAfter(1, 20);
 
 
 	//srand((unsigned int)time(0));
