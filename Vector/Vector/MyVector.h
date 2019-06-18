@@ -12,17 +12,22 @@ public:
 	T operator[](size_t GetPos);
 
 	int GetSize();
+
+	bool Erase(size_t Index);
+	bool InsertAfter(size_t Index, T Value);
 private:
 	T* Data;
 	size_t StorageSize;
-	size_t Pos;
+	size_t InsertPosition; 
+	size_t Size;
 };
 
 template<typename T>
 MyVector<T>::MyVector()
 {
 	StorageSize = 100;
-	Pos = 0;
+	InsertPosition = 0;
+	Size = 0;
 	Data = new T[StorageSize];
 }
 
@@ -35,23 +40,21 @@ MyVector<T>::~MyVector()
 template<typename T>
 void MyVector<T>::PushBack(T NewValue)
 {
-	if (Pos == StorageSize)
+	if (Size >= StorageSize)
 	{
 		//저장소 새로 생성, 추가
-		T* Temp = new T[StorageSize * 2];
-		memcpy(Temp, Data, Pos * sizeof(T));
+		StorageSize = StorageSize * 2;
+
+		T* Temp = new T[StorageSize];
+		memcpy(Temp, Data, InsertPosition * sizeof(T));
 
 		//예전에 작은 저장소 삭제
 		delete[] Data;
 		Data = Temp;
-		StorageSize = StorageSize * 2;
-		Data[Pos++] = NewValue;
 	}
-	else
-	{
-		//저장소 충분
-		Data[Pos++] = NewValue;
-	}
+
+	Data[InsertPosition++] = NewValue;
+	Size++;
 }
 
 template<typename T>
@@ -63,7 +66,65 @@ T MyVector<T>::operator[](size_t GetPos)
 template<typename T>
 int MyVector<T>::GetSize()
 {
-	return Pos;
+	return Size;
+}
+
+template<typename T>
+bool MyVector<T>::Erase(size_t Index)
+{
+	if (Index < 0 || Index > InsertPosition)
+	{
+		return false;
+	}
+
+	////지우는 로직 시작
+	//for (int i = Index; i < Pos - 1; ++i)
+	//{
+	//	Data[i] = Data[i + 1];
+	//}
+
+//	memcpy(&Data[Index], &Data[Index + 1], (Size - Index) * sizeof(T));
+	memcpy(Data + Index, Data + (Index + 1), (Size - Index) * sizeof(T));
+	//memmove(Data + Index, Data + (Index + 1), (Size - Index) * sizeof(T));
+
+	InsertPosition--;
+	Size--;
+
+	return true;
+}
+
+template<typename T>
+bool MyVector<T>::InsertAfter(size_t Index, T Value)
+{
+	if (Index < 0 || Index > InsertPosition)
+	{
+		return false;
+	}
+
+	if (Size >= StorageSize)
+	{
+		//저장소 새로 생성, 추가
+		StorageSize = StorageSize * 2;
+
+		T* Temp = new T[StorageSize];
+		memcpy(Temp, Data, InsertPosition * sizeof(T));
+
+		//예전에 작은 저장소 삭제
+		delete[] Data;
+		Data = Temp;
+	}
+
+	memcpy(&Data[Index + 1], &Data[Index], (Size - Index) * sizeof(T));
+	//for (int i = Size-1; i >= Index+1; --i)
+	//{
+	//	Data[i + 1] = Data[i];
+	//}
+	//Data[Index+1] = Value;
+
+	Size++;
+	InsertPosition++;
+
+	return true;
 }
 
 
