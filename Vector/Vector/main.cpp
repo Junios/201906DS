@@ -4,7 +4,8 @@
 
 int main()
 {
-	//std::vector<int> vInt;
+	std::vector<int> vInt;
+
 
 	//vInt[1] = 1;
 	//for (int i = 0; i < 1000; ++i)
@@ -13,9 +14,9 @@ int main()
 	//}
 
 
-	MyVector v;
+	MyVector<int> v;
 
-	for (int i = 0; i < 10000; ++i)
+	for (int i = 0; i < 10; ++i)
 	{
 		v.PushBack(i);
 	}
