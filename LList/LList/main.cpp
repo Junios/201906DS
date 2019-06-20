@@ -1,26 +1,27 @@
 #include <iostream>
 #include <list>
 #include <vector>
+#include <algorithm>
 #include "LList.h"
 
 using namespace std;
 
 int main()
 {
-//	list<int> a;
-//	a.find()
+	list<int> a;
 
-	LList l;
-	for (int i = 0; i < 10; ++i)
+	LList<float> l;
+	for (int i = 1; i <= 10; ++i)
 	{
-		l.PushBack(i);
+		l.PushBack(i *1.1f);
 	}
 
-	l.InsertAfter(l.Find(3), 20);
-	l.InsertAfter(l.Find(3), 30);
-	l.InsertAfter(l.Find(3), 40);
+	for (LList<float>::Iterator CurrentPosition = l.Begin(); CurrentPosition != l.End(); CurrentPosition++)
+	{
+		CurrentPosition = l.Erase(CurrentPosition);
+	}
 
-	for (LList::Iterator CurrentPosition = l.Begin(); CurrentPosition != l.End(); CurrentPosition++)
+	for (LList<float>::ReverseIterator CurrentPosition = l.RBegin(); CurrentPosition != l.REnd(); CurrentPosition++)
 	{
 		cout << (*CurrentPosition)->Value << endl;
 	}
@@ -59,5 +60,5 @@ int main()
 
 	
 
-	return 0;
+ 	return 0;
 }
