@@ -38,3 +38,32 @@ void LList::Insert(int NewValue)
 		
 	//}
 }
+
+void LList::Insert(int NewValue, int SearchValue)
+{
+	Iterator InsertPositionIterator = Find(SearchValue);
+	if (InsertPositionIterator != nullptr)
+	{
+		Node* NewNode = new Node();
+		NewNode->Value = NewValue;
+
+		Node* Next = (*InsertPositionIterator)->Next;
+
+		(*InsertPositionIterator)->Next = NewNode;
+		//추가 노드의 다음은 원래 노드의 다음
+		NewNode->Next = Next;
+	}
+}
+
+LList::Iterator LList::Find(int SearchValue)
+{
+	for (Iterator Current = Begin(); Current != End(); ++Current)
+	{
+		if ((*Current)->Value == SearchValue)
+		{
+			return Current;
+		}
+	}
+
+	return nullptr;
+}
