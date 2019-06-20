@@ -7,6 +7,7 @@ LList::LList()
 	Head = new Node();
 	Tail = new Node();
 	Head->Next = Tail;
+	Tail->Prev = Head;
 }
 
 
@@ -14,44 +15,43 @@ LList::~LList()
 {
 }
 
-//1. 자료 없을때
-//2. 자료 있을때
-void LList::Insert(int NewValue)
+void LList::PushBack(int NewValue)
 {
-	Node* NewNode = new Node();
-	NewNode->Value = NewValue;
+	Node* NewNode = MakeNode(NewValue);
 
-	//if (Head->Next == Tail)
-	//{
-	//	Head->Next = NewNode;
-	//	NewNode->Next = Tail;
-	//}
-	//else
-	//{
-		Node* Find;
-		for (Find = Head; Find->Next != Tail; Find = Find->Next)
-		{
-		}
-
-		Find->Next = NewNode;
+	if (NewNode)
+	{
+		NewNode->Prev = Tail->Prev;
+		Tail->Prev = NewNode;
 		NewNode->Next = Tail;
-		
-	//}
+		NewNode->Prev->Next = NewNode;
+	}
 }
 
-void LList::Insert(int NewValue, int SearchValue)
+void LList::PushFront(int NewValue)
 {
-	Iterator InsertPositionIterator = Find(SearchValue);
-	if (InsertPositionIterator != nullptr)
+	Node* NewNode = MakeNode(NewValue);
+
+	if (NewNode)
 	{
-		Node* NewNode = new Node();
-		NewNode->Value = NewValue;
+		NewNode->Prev = Head;
+		NewNode->Next = Head->Next;
+		NewNode->Next->Prev = NewNode;
+		Head->Next = NewNode;
+	}
+}
 
-		Node* Next = (*InsertPositionIterator)->Next;
+void LList::InsertAfter(LList::Iterator Where, int NewValue)
+{
+	if (Where != nullptr)
+	{
+		Node* NewNode = MakeNode(NewValue);
 
-		(*InsertPositionIterator)->Next = NewNode;
-		//추가 노드의 다음은 원래 노드의 다음
-		NewNode->Next = Next;
+		//노드 연결
+		NewNode->Next = (*Where)->Next;
+		NewNode->Prev = (*Where);
+		(*Where)->Next = NewNode;
+		NewNode->Next->Prev = NewNode;
 	}
 }
 
@@ -66,4 +66,12 @@ LList::Iterator LList::Find(int SearchValue)
 	}
 
 	return nullptr;
+}
+
+Node * LList::MakeNode(int NewValue)
+{
+	Node* NewNode = new Node();
+	NewNode->Value = NewValue;
+
+	return NewNode;
 }

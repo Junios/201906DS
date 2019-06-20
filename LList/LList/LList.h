@@ -1,13 +1,13 @@
 #pragma once
-//--------
-//| 1  | |
-//--------
-//--------
-//| 2  | |
-//--------
-//--------
-//| 3  | |
-//--------
+//------------
+//|  |  1  | |
+//------------
+//------------
+//|  |  2  | |
+//------------
+//------------
+//|  |  3  | |
+//------------
 class Node
 {
 public:
@@ -35,6 +35,13 @@ public:
 			return *this;
 		}
 
+		Iterator operator++(int)
+		{
+			Node Temp = *Current;
+			Current = Current->Next;
+			return Iterator(&Temp);
+		}
+
 		Node* operator* ()
 		{
 			return Current;
@@ -44,11 +51,17 @@ public:
 		{
 			return (Current != rhs.Current);
 		}
+
+		bool operator==(const Iterator& rhs)
+		{
+			return (Current == rhs.Current);
+		}
 	};
 
-	void Insert(int NewValue);
+	void PushBack(int NewValue); //Tail 앞에 추가
+	void PushFront(int NewValue); //Head 앞에 추가
 
-	void Insert(int NewValue, int SearchValue);
+	void InsertAfter(LList::Iterator Where, int SearchValue);
 	Iterator Find(int SearchValue);
 
 	Iterator Begin() { return Iterator(Head->Next);  }
@@ -57,5 +70,7 @@ public:
 protected:
 	Node* Tail;
 	Node* Head;
+
+	Node* MakeNode(int NewValue);
 };
 
