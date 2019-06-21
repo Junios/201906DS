@@ -139,13 +139,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AQueue.cpp" />
     <ClCompile Include="AStack.cpp" />
+    <ClCompile Include="LQueue.cpp" />
     <ClCompile Include="LStack.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AQueue.h" />
     <ClInclude Include="AStack.h" />
     <ClInclude Include="LList.h" />
+    <ClInclude Include="LQueue.h" />
     <ClInclude Include="LStack.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

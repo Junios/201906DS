@@ -18,11 +18,16 @@ public:
 	{
 		Data.PushBack(NewValue);
 	}
-	T Pop()
+
+	T Top()
 	{
 		T ReturnValue = (*Data.RBegin())->Value;
-		Data.Erase(Data.RBegin());
 		return ReturnValue;
+	}
+
+	void Pop()
+	{
+		Data.Erase(Data.RBegin());
 	}
 
 	unsigned int GetSize()

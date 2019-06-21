@@ -27,15 +27,25 @@ public:
 		}
 	}
 
-	T Pop()
+	T Top()
 	{
 		if (Size < 1)
 		{
 			return 0;
 		}
 
+		return Data[Cursor-1];
+	}
+
+	void Pop()
+	{
+		if (Size < 1)
+		{
+			return;
+		}
+
 		Size--;
-		return Data[--Cursor];
+		--Cursor;
 	}
 
 	unsigned int GetSize()
