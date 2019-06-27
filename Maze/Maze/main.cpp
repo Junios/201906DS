@@ -1,5 +1,7 @@
 #include <iostream>
 #include <stack>
+#include <queue>
+#include <conio.h>
 
 using namespace std;
 
@@ -13,6 +15,7 @@ class Vector2
 {
 public:
 	Vector2() : x(0), y(0) {}
+	Vector2(int _x, int _y ) : x(_x), y(_y) {}
 	int x;
 	int y;
 
@@ -77,53 +80,177 @@ bool CanMove(Vector2& Current)
 	return false; //다음 갈곳이 없음
 }
 
+#define LEVEL			100
+
+bool CanMoveQ(Vector2& NewPosition)
+{
+	if (NewPosition.x < 0 || NewPosition.y < 0 ||
+		NewPosition.x >= MAX || NewPosition.y >= MAX)
+	{
+		return false;
+	}
+
+	if (maze[NewPosition.y][NewPosition.x] == WAY) //갈수 있으므로 큐에 넣고 레벨 저장
+	{
+		return true;
+	}
+
+	return false;
+}
+
+
+bool TraceMoveQ(Vector2& NewPosition, int Level)
+{
+	if (NewPosition.x < 0 || NewPosition.y < 0 ||
+		NewPosition.x >= MAX || NewPosition.y >= MAX)
+	{
+		return false;
+	}
+
+	if (maze[NewPosition.y][NewPosition.x] == Level) //갈수 있으므로 큐에 넣고 레벨 저장
+	{
+		return true;
+	}
+
+	return false;
+}
+
 int main()
 {
-	//방향 정보 매핑 초기화
-	Dir[static_cast<int>(Direction::Right)].x = 1;
-	Dir[(int)Direction::Right].y = 0;
-
-	Dir[(int)Direction::Down].x = 0;
-	Dir[(int)Direction::Down].y = 1;
-
-	Dir[(int)Direction::Left].x = -1;
-	Dir[(int)Direction::Left].y = 0;
-
-	Dir[(int)Direction::Up].x = 0;
-	Dir[(int)Direction::Up].y = -1;
-
+	queue<Vector2> Q;
 	Vector2 Current;
 
-	stack<Vector2> EscapeMap;
+	Q.push(Current);
+	maze[Current.y][Current.x] = LEVEL;
+	bool found = false;
 
-	//알고리즘 시작
-	while (true)
+	while (!Q.empty())
 	{
-		maze[Current.y][Current.x] = PATH; //현재 위치 지도에 표시
-		if (Current.x == MAX - 1 && Current.y == MAX - 1) 
+		Current = Q.front();
+		Q.pop();
+
+		int CurrentLevel = maze[Current.y][Current.x];
+		Vector2 NewPosition;
+		NewPosition = Current + Vector2(1, 0); //Right
+		if (CanMoveQ(NewPosition))
 		{
-			//목적지 도착 하면 끝
+			maze[NewPosition.y][NewPosition.x] = CurrentLevel + 1;
+			Q.push(NewPosition);
+		}
+
+		NewPosition = Current + Vector2(0, 1); //Down
+		if (CanMoveQ(NewPosition))
+		{
+			maze[NewPosition.y][NewPosition.x] = CurrentLevel + 1;
+			Q.push(NewPosition);
+		}
+
+
+		NewPosition = Current + Vector2(-1, 0); //Left
+		if (CanMoveQ(NewPosition))
+		{
+			maze[NewPosition.y][NewPosition.x] = CurrentLevel + 1;
+			Q.push(NewPosition);
+		}
+
+
+		NewPosition = Current + Vector2(0, -1); //Up
+		if (CanMoveQ(NewPosition))
+		{
+			maze[NewPosition.y][NewPosition.x] = CurrentLevel + 1;
+			Q.push(NewPosition);
+		}
+
+		if (Current.x == (MAX - 1) && Current.y == (MAX - 1)) //탈출
+		{
+			cout << "탈출" << endl;
+			found = true;
 			break;
 		}
-		else if (CanMove(Current)) //다음 위치 이동 해보기
+	}
+
+	if (found == false)
+	{
+		cout << "탈출불가" << endl;
+	}
+
+	//for (int y = 0; y < MAX; ++y)
+	//{
+	//	for (int x = 0; x < MAX; ++x)
+	//	{
+	//		cout << maze[y][x] << "  ";
+	//	}
+	//	cout << endl;
+	//}
+
+	int maze_escape[MAX][MAX] = {
+		{1,}
+	};
+
+	for (int y = 0; y < MAX; ++y)
+	{
+		for (int x = 0; x < MAX; ++x)
 		{
-			//다음 위치가 생겼음
-			//현재 기록
-			EscapeMap.push(Current);
+			maze_escape[y][x] = 1;
 		}
-		else
+	}
+
+
+	Vector2 TracePosition(MAX - 1, MAX - 1);
+	maze_escape[TracePosition.y][TracePosition.x] = 0;
+	while (true)
+	{
+		//system("cls");
+		//for (int y = 0; y < MAX; ++y)
+		//{
+		//	for (int x = 0; x < MAX; ++x)
+		//	{
+		//		cout << maze_escape[y][x] << "  ";
+		//	}
+		//	cout << endl;
+		//}
+		//getch();
+
+
+		int MaxLevel = maze[TracePosition.y][TracePosition.x];
+
+		if (TracePosition.x == 0 && TracePosition.y == 0)
 		{
-			if (EscapeMap.empty())
-			{
-				cout << "탈출불가" << endl;
-				break;
-			}
-			else
-			{
-				maze[Current.y][Current.x] = BLOCK; //현재 위치는 길 막힘
-				Current = EscapeMap.top(); //이전위치 복원
-				EscapeMap.pop();
-			}
+			maze_escape[TracePosition.y][TracePosition.x] = 0;
+			break;
+		}
+
+		Vector2 Next;
+		Next = TracePosition + Vector2(1, 0);
+		if (TraceMoveQ(Next, MaxLevel-1))
+		{
+			TracePosition = Next;
+			maze_escape[Next.y][Next.x] = 0;
+			continue;
+		}
+
+		Next = TracePosition + Vector2(0, 1);
+		if (TraceMoveQ(Next, MaxLevel - 1))
+		{
+			TracePosition = Next;
+			maze_escape[Next.y][Next.x] = 0;
+			continue;
+		}
+
+		Next = TracePosition + Vector2(-1, 0);
+		if (TraceMoveQ(Next, MaxLevel - 1))
+		{
+			TracePosition = Next;
+			maze_escape[Next.y][Next.x] = 0;
+			continue;
+		}
+
+		Next = TracePosition + Vector2(0, -1);
+		if (TraceMoveQ(Next, MaxLevel - 1))
+		{
+			TracePosition = Next;
+			maze_escape[Next.y][Next.x] = 0;
+			continue;
 		}
 	}
 
@@ -132,46 +259,10 @@ int main()
 	{
 		for (int x = 0; x < MAX; ++x)
 		{
-			cout << maze[y][x] << " ";
+			cout << maze_escape[y][x] << "  ";
 		}
 		cout << endl;
 	}
-
-	//	{100, 101, 102, 103, 104, 105, 106, 107, 0, 0},
-	//	{1, 1, 1, 1, 1, 1, 107, 1, 1, 1},
-	//	{1, 1, 1, 1, 1, 1, 108, 1, 1, 1},
-	//	{1, 1, 1, 1, 1, 1, 109, 1, 1, 1},
-	//	{1, 1, 1, 1, 112, 111, 110, 111, 1, 1},
-	//	{1, 1, 1, 1, 113, 1, 1, 112, 1, 1},
-	//	{1, 1, 1, 1, 114, 1, 1, 113, 1, 1},
-	//	{1, 1, 1, 1, 115, 1, 1, 114, 1, 1},
-	//	{1, 1, 0, 0, 116, 1, 1, 115, 1, 1},
-	//	{1, 1, 1, 1, 117, 118, 119, 116, 117, 118},
-
-
-	//1.큐 만들기
-	//처음 현재 위치에 (숫자를 적음, 100)
-	//처음 초기화 탈출구 못 찾음
-	//탐색(큐가 비어있지 않으면)
-	//{
-	//		큐에서 정보 꺼내기(현재위치)
-	//		레벨 가져오기
-	//		4방향이동(반복문)
-	//		{
-	//			이동가능()
-	//			{
-	//				다음위치에 현재 레벨 + 1 써주기
-	//				다음위치가 목적지냐?
-	//				{
-	//					끝
-	//					탈출 했음
-	//				}
-	//				큐에 다음 위치 기록
-	//			}
-	//		}
-	//
-	//}
-
 
 
 	return 0;
