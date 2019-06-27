@@ -4,6 +4,7 @@
 #include <algorithm>
 #include "LList.h"
 
+
 using namespace std;
 
 int main()
@@ -14,16 +15,28 @@ int main()
 	for (int i = 1; i <= 10; ++i)
 	{
 		l.PushBack(i *1.1f);
+		a.push_back(i);
 	}
 
-	for (LList<float>::Iterator CurrentPosition = l.Begin(); CurrentPosition != l.End(); CurrentPosition++)
+	for (LList<float>::Iterator iter = l.Begin(); iter != l.End(); iter++)
 	{
-		CurrentPosition = l.Erase(CurrentPosition);
+		iter = l.Erase(iter);
+	}
+
+
+	for (list<int>::iterator iter = a.begin(); iter != a.end(); ++iter)
+	{
+		iter = a.erase(iter);
 	}
 
 	for (LList<float>::ReverseIterator CurrentPosition = l.RBegin(); CurrentPosition != l.REnd(); CurrentPosition++)
 	{
 		cout << (*CurrentPosition)->Value << endl;
+	}
+
+	for (list<int>::reverse_iterator iter = a.rbegin(); iter != a.rend(); iter++)
+	{
+		cout << (*iter) << endl;
 	}
 
 	//vector<int> testVec;
