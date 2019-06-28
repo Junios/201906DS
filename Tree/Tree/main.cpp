@@ -128,13 +128,13 @@ public:
 			Current->Data = Data;
 			Current->Parent = Parent;
 
-			if (Data < Current->Data)
+			if (Data < Parent->Data)
 			{
-				Current->Parent->Left = Current;
+				Parent->Left = Current;
 			}
 			else
 			{
-				Current->Parent->Right = Current;
+				Parent->Right = Current;
 			}
 
 			return;
@@ -199,11 +199,10 @@ int main()
 	SearchTree.Insert(34);
 	SearchTree.Insert(40);
 	SearchTree.Insert(100);
+	SearchTree.Insert(25);
 	SearchTree.Insert(7);
 	SearchTree.Insert(5);
 	SearchTree.Insert(6);
-
-
 
 	return 0;
 }
