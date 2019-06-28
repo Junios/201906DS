@@ -2,9 +2,10 @@
 
 using namespace std;
 
-void Swap(int& a, int& b)
+template<typename T>
+void Swap(T& a, T& b)
 {
-	int Temp = a;
+	T Temp = a;
 	a = b;
 	b = Temp;
 }
@@ -58,22 +59,34 @@ void HelloWorld2()
 }
 
 
-int partition(int* Data, int begin, int end)
+template<typename T>
+int partition(T* data, int begin, int end, bool (*fp)(T, T))
 {
-	int pivot = Data[end];
-	//
+	T pivot = data[end];
+	int min = begin - 1;
+	for (int cursor = begin; cursor <= end - 1; ++cursor)
+	{
+		if (fp(data[cursor], pivot))
+		{
+			min++;
+			Swap(data[min], data[cursor]);
+		}
+	}
 
-	return //pivotÀÇ ÀÎµ¦½º;
+	Swap(data[min + 1], data[end]);
+
+	return min + 1;
 }
 
-void QuickSort(int* Data, int begin, int end)
+template<typename T>
+void QuickSort(T* Data, int begin, int end, bool(*fp)(T, T))
 {
 	if (begin < end)
 	{
 		//ÇÇº¿ ¸¸µé±â
-		int pivot = partition(Data, begin, end);
-		QuickSort(Data, begin, pivot - 1);
-		QuickSort(Data, pivot + 1, end);
+		int pivot = partition(Data, begin, end, fp);
+		QuickSort(Data, begin, pivot - 1, fp);
+		QuickSort(Data, pivot + 1, end, fp);
 	}
 }
 
@@ -96,7 +109,7 @@ int main()
 	}
 	cout << endl;
 
-	BubbleSort(Data, 10, cmp);
+	QuickSort<int>(Data, 0, 9, cmp2);
 
 	for (int i = 0; i < 10; ++i)
 	{
