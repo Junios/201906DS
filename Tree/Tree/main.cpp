@@ -107,19 +107,61 @@ protected:
 
 class BinarySearchTree : public BinaryTree
 {
+public:
+	BinarySearchTree(int Data = 100)
+	{
+		Root = new Node();
+		Root->Data = Data;
+		Root->Parent = nullptr;
+	}
+
+	void Insert(int Data)
+	{
+		InsertNode(Root->Parent, Root, Data);
+	}
+
+	void InsertNode(Node* Parent, Node* Current, int Data)
+	{
+		if (Current == nullptr)
+		{
+			Current = new Node();
+			Current->Data = Data;
+			Current->Parent = Parent;
+
+			if (Data < Current->Data)
+			{
+				Current->Parent->Left = Current;
+			}
+			else
+			{
+				Current->Parent->Right = Current;
+			}
+
+			return;
+		}
+
+		if (Data < Current->Data)
+		{
+			InsertNode(Current, Current->Left, Data);
+		}
+		else
+		{
+			InsertNode(Current, Current->Right, Data);
+		}
+	}
 
 };
 
 int main()
 {
-	BinaryTree Number;
+	//BinaryTree Number;
 
-	Number.InsertLeft(1, 2);
-	Number.InsertRight(1, 3);
-	Number.InsertLeft(2, 4);
-	Number.InsertRight(2, 5);
-	Number.InsertLeft(3, 6);
-	Number.InsertRight(3, 7);
+	//Number.InsertLeft(1, 2);
+	//Number.InsertRight(1, 3);
+	//Number.InsertLeft(2, 4);
+	//Number.InsertRight(2, 5);
+	//Number.InsertLeft(3, 6);
+	//Number.InsertRight(3, 7);
 
 	//Number.Root->Left = new Node();
 	//Number.Root->Left->Data = 2;
@@ -150,6 +192,16 @@ int main()
 	////Number.Traversal();
 	//Node* Temp = Number.Search(3);
 
+	BinarySearchTree SearchTree(10);
+
+	SearchTree.Insert(20);
+	SearchTree.Insert(3);
+	SearchTree.Insert(34);
+	SearchTree.Insert(40);
+	SearchTree.Insert(100);
+	SearchTree.Insert(7);
+	SearchTree.Insert(5);
+	SearchTree.Insert(6);
 
 
 
